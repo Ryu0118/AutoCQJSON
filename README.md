@@ -1,7 +1,9 @@
 # AutoCQJSON
 
 ## Usage
-`python main.py xxx.txt`
+Download the source and add the text file in the same directory.
+Then run
+`$ python main.py question.txt`
 
 Create metadata for questions
 ``` Question.txt
