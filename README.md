@@ -1,5 +1,3 @@
-# AutoCQJSON
-
 ## Usage
 Download the source and add the text file in the same directory.
 Then run
