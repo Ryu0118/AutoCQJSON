@@ -6,6 +6,9 @@ from question import Question
 def main():
     file_name = sys.argv[1:]
     if file_name != [] and len(file_name) == 1:
+        if not file_name[0].endswith('.txt'):
+            raise Exception("File extension should be txt")
+
         with open(file_name[0], 'r', encoding='utf-8') as file:
             questions = parse(file)
             dic = convert_to_dictionary(questions)
