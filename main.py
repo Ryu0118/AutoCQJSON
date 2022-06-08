@@ -17,7 +17,7 @@ def main():
 def dump_to_json(dict, filename):
     json_file_name = filename.split('.')[0]
     with open(json_file_name + '.json', 'w', encoding='utf-8') as file:
-        json.dump(dict, file, indent=4, ensure_ascii=False)
+        json.dump(dict, file, indent=2, ensure_ascii=False)
 
 
 def convert_to_dictionary(questions) -> dict:
