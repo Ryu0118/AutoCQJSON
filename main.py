@@ -66,6 +66,10 @@ def parse(file) -> list:
     for i, line in enumerate(file):
         # blank
         if line == '\n':
+            if 0 < len(question) < 4:
+                raise Exception(
+                    f'{4 - len(question)} pieces of metadata are missing.')
+
             continue
         # classify
         if 'difficulty:' in line and 'category:' in line and 'subcategory:' in line:
