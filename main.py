@@ -90,14 +90,14 @@ def parse(file) -> list:
             # Error handling
             if len(metadata) != 3:
                 terminate(
-                    f'line {i + 1}: Metadata is missing.\ndefine "difficulty:", "category:" and "subcategory:"')
+                    f'line {i + 1}: {line}Metadata is missing.\ndefine "difficulty:", "category:" and "subcategory:"')
 
             for element in metadata:
                 tmp = element.split(':')
                 # Error handling
                 if len(tmp) != 2:
                     terminate(
-                        f'Wrong syntax at line {i + 1}\nline {i + 1}: {line}\nYou cannot use ":" ')
+                        f'Wrong syntax at line {i + 1}\nline {i + 1}: {line}You cannot use ":" ')
 
                 current_meta_dic[tmp[0]] = tmp[1].strip()
 
@@ -105,9 +105,12 @@ def parse(file) -> list:
         else:
             tmp = line.split(':')
             # Error handling
-            if len(tmp) > 2:
+            if 'difficulty:' in line or 'category:' in line or 'subcategory:' in line:
                 terminate(
-                    f'Wrong syntax at line {i + 1}\nline {i + 1}: {line}\nYou cannot use ":" ')
+                    f'line {i + 1}: {line}Metadata is missing.\ndefine "difficulty:", "category:" and "subcategory:"')
+            elif len(tmp) > 2:
+                terminate(
+                    f'Wrong syntax at line {i + 1}\nline {i + 1}: {line}You cannot use ":" ')
             elif 0 < len(tmp) < 2:
                 terminate(
                     f'Undefined token {tmp[0]}')
