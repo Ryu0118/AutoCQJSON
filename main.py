@@ -105,9 +105,12 @@ def parse(file) -> list:
         else:
             tmp = line.split(':')
             # Error handling
-            if len(tmp) != 2:
+            if len(tmp) > 2:
                 terminate(
                     f'Wrong syntax at line {i + 1}\nline {i + 1}: {line}\nYou cannot use ":" ')
+            elif 0 < len(tmp) < 2:
+                terminate(
+                    f'Undefined token {tmp[0]}')
 
             if not is_defined_metadata:
                 terminate(
