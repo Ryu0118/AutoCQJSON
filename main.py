@@ -27,33 +27,41 @@ def dump_to_json(dict, filename):
 
 def convert_to_dictionary(questions) -> dict:
     dic = {}
-    category_dic = {}
-    subcategory_dic = {}
 
-    prev_difficulty = ""
-    prev_category = ""
+    for question in questions:
+        flag = False
+        if question.difficulty in dic.keys():
+            category_arr = dic[question.difficulty]
+            for category_index, category in enumerate(category_arr):
+                if question.category in category.keys():
+                    for subcategory_index, subcategory in enumerate(category[question.category]):
+                        if question.subcategory in subcategory.keys():
+                            dic[question.difficulty][category_index][question.category][subcategory_index][question.subcategory].append(
+                                question.questions)
+                            flag = True
+                            break
+                    if flag:
+                        break
+                    else:
+                        subcategory_dic = {}
+                        subcategory_dic[question.subcategory] = question.questions
+                        dic[question.difficulty][category_index][question.category].append(
+                            subcategory_dic)
+                        flag = True
+                        break
 
-    for i, question in enumerate(questions):
-        subcategory_dic[question.subcategory] = question.questions
-        if i == 0:
-            category_dic[question.category] = [subcategory_dic]
-            dic[question.difficulty] = [category_dic]
-        else:
-            if question.difficulty != prev_difficulty:
+            if not flag:
                 category_dic = {}
-                category_dic[question.category] = [subcategory_dic]
-                dic[question.difficulty] = [category_dic]
-            elif question.category != prev_category:
-                category_dic = {}
+                subcategory_dic = {}
+                subcategory_dic[question.subcategory] = question.questions
                 category_dic[question.category] = [subcategory_dic]
                 dic[question.difficulty].append(category_dic)
-            else:
-                category_dic[question.category].append(subcategory_dic)
-                dic[question.difficulty] = [category_dic]
-
-        prev_category = question.category
-        prev_difficulty = question.difficulty
-        subcategory_dic = {}
+        else:
+            category_dic = {}
+            subcategory_dic = {}
+            subcategory_dic[question.subcategory] = question.questions
+            category_dic[question.category] = [subcategory_dic]
+            dic[question.difficulty] = [category_dic]
 
     return dic
 
